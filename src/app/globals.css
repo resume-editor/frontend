@@ -1,0 +1,78 @@
+/* ============ Layout ============ */
+
+body {
+  margin: 0;
+  display: flex;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: 16px;
+}
+
+/* ============ Sidebar ============ */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  transform: translateX(0);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.sidebar-content {
+  padding: 16px;
+}
+
+/* Overlay (mobile only) */
+.overlay {
+  display: none;
+}
+
+/* ============ Hamburger ============ */
+
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  background: none;
+  border: none;
+  z-index: 1100;
+  cursor: pointer;
+}
+
+/* ============ Mobile behavior ============ */
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding-top: 56px; /* space for hamburger */
+  }
+}
