@@ -1,0 +1,27 @@
+.editor-section {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.section-header {
+    width: 100%;
+    padding: 12px;
+    background: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+}
+
+.section-body {
+    padding: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+}

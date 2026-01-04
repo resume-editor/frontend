@@ -1,0 +1,19 @@
+.home-layout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--background);
+}
+
+/* must match sidebar width */
+.home-main {
+    flex: 1;
+    margin-left: 260px;
+    padding: 24px;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+    .home-main {
+        margin-left: 0;
+    }
+}

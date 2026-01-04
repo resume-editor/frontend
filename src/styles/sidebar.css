@@ -1,0 +1,115 @@
+/* ================= BASE (DESKTOP FIRST) ================= */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    z-index: 1000;
+    /* transform: translateX(0); visible on desktop */
+}
+
+/* Header */
+.sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.sidebar-header h2 {
+    font-size: 18px;
+    color: var(--text-primary);
+}
+
+/* Nav */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-item {
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.sidebar-item:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* Hamburger & Close hidden by default (DESKTOP) */
+.sidebar-hamburger {
+    display: none;
+}
+
+.sidebar-hamburger.hidden {
+    display: none;
+    pointer-events: none;
+}
+
+.close-btn {
+    display: none;
+}
+
+/* Overlay */
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 900;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    /* Sidebar hidden by default */
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    /* Hamburger (only when sidebar closed — JS handles visibility) */
+    .sidebar-hamburger {
+        display: block;
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        font-size: 22px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 1100;
+    }
+
+    /* Close button ONLY on mobile */
+    .close-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 22px;
+        cursor: pointer;
+    }
+}
+
+@media (min-width: 769px) {
+    .sidebar {
+        transform: translateX(0);
+    }
+}

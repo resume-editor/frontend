@@ -1,0 +1,48 @@
+.resume-editor-layout {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* LEFT */
+.editor-column {
+    width: 45%;
+    min-width: 360px;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 16px;
+}
+
+/* RIGHT */
+.preview-column {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    background: #f6f7f9;
+}
+
+.editor-panel {
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px;
+    border-right: 1px solid var(--border);
+    background: var(--background);
+}
+
+.editor-actions {
+    margin-top: 24px;
+}
+
+
+/* Mobile */
+@media (max-width: 900px) {
+    .resume-editor-layout {
+        flex-direction: column;
+    }
+
+    .editor-column,
+    .preview-column {
+        width: 100%;
+        height: 50vh;
+    }
+}
