@@ -1,8 +1,16 @@
-/* ============ Layout ============ */
+/* ============ Base ============ */
 
 body {
   margin: 0;
+  background: var(--background);
+}
+
+/* ============ App Layout Wrapper ============ */
+/* Used ONLY on pages that have sidebar */
+
+.app-layout {
   display: flex;
+  min-height: 100vh;
 }
 
 /* Main content */
@@ -21,18 +29,29 @@ body {
   height: 100vh;
   background: var(--surface);
   border-right: 1px solid var(--border);
+  z-index: 1000;
   transform: translateX(0);
   transition: transform 0.3s ease;
-  z-index: 1000;
 }
 
 .sidebar-content {
   padding: 16px;
 }
 
-/* Overlay (mobile only) */
+/* ============ Overlay ============ */
+
 .overlay {
   display: none;
+  pointer-events: none;
+}
+
+.overlay.active {
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 900;
+  pointer-events: auto;
 }
 
 /* ============ Hamburger ============ */
@@ -59,20 +78,12 @@ body {
     transform: translateX(0);
   }
 
-  .overlay {
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: -1;
-  }
-
   .hamburger {
     display: block;
   }
 
   .main-content {
     margin-left: 0;
-    padding-top: 56px; /* space for hamburger */
+    padding-top: 56px;
   }
 }

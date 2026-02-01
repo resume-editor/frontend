@@ -1,3 +1,5 @@
+import apiClient from "./apiClient";
+
 export const getHomeData = () => {
     return Promise.resolve([
         {
@@ -17,3 +19,16 @@ export const getHomeData = () => {
         }
     ]);
 };
+
+export const fetchHomeData = async (page = 1, size = 12, name = undefined) => {
+    let url = name ? `/template?page=${page}&size=${size}&name=${name}` : `/template?page=${page}&size=${size}`
+    const response = await apiClient.get(url)
+    return response.data
+}
+
+export const fetchSidebarData = async (page = 1, size = 10, name = undefined) => {
+    let url = name ? `/resume?page=${page}&size=${size}&name=${name}` : `/resume?page=${page}&size=${size}`
+    console.log('URL : ', url)
+    const response = await apiClient.get(url)
+    return response.data
+}

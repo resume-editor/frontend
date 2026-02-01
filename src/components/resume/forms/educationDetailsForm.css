@@ -25,22 +25,3 @@
     padding: 8px;
     margin-bottom: 8px;
 }
-
-.form-set {
-    border: 1px dashed var(--border);
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 6px;
-}
-
-.btn-sm {
-    padding: 6px 10px;
-    font-size: 12px;
-}
-
-.btn-danger {
-    background: #dc3545;
-    color: white;
-    border: none;
-    margin-top: 4px;
-}
