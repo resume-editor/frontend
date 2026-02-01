@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { login, signup } from '../../services/authService';
 import '../../styles/auth.css';
+import { signInApi } from '@/services/authService';
 
 export default function AuthPage() {
     const router = useRouter();
@@ -31,13 +31,18 @@ export default function AuthPage() {
         setLoading(true);
 
         try {
-            const res =
-                mode === 'login'
-                    ? await login({ email: form.email, password: form.password })
-                    : await signup(form);
 
-            if (res.success && mode === 'login') router.push('/home');
-            if (res.success && mode === 'signup') setMode('login');
+            console.log('Mode: ', mode)
+            if (mode == 'login') {
+                console.log('Logging in')
+                const data = await signInApi({ email: form.email, password: form.password })
+                if (data.access_token) {
+                    router.push('/home')
+                }
+            } else {
+                await signup(form);
+                setMode('login')
+            }
         } finally {
             setLoading(false);
         }
@@ -81,6 +86,7 @@ export default function AuthPage() {
                 {error && <div className="alert alert-danger py-2">{error}</div>}
 
                 <button
+                    type='button'
                     className="btn btn-primary w-100"
                     disabled={loading}
                     onClick={handleSubmit}

@@ -7,3 +7,27 @@
     color: var(--text-primary);
     margin-bottom: 24px;
 }
+
+/* Search form: input + button inline */
+.search-form {
+  display: flex;
+  gap: 8px; /* space between input and button */
+  margin-bottom: 24px;
+}
+
+.search-form input {
+  flex: 1; /* input takes remaining space */
+}
+
+.search-form button {
+  flex-shrink: 0; /* button keeps its size */
+}
+
+/* Pagination: align to bottom right */
+.pagination-controls {
+  display: flex;
+  justify-content: flex-end; /* move to right */
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
