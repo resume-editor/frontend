@@ -6,19 +6,20 @@ export const findTemplate = async (template_id) => {
 }
 
 export const generateResume = async ({
-        full_name,
-        email,
-        phone,
-        linkedin,
-        github,
-        summary, skills = [], education = [], experience = [], projects = []
-    },
-    {
-        job_id,
-        template_id
-    }) => {
+    name,
+    full_name,
+    email,
+    phone,
+    linkedin,
+    github,
+    summary, skills = [], education = [], experience = [], projects = []
+},
+{
+    job_id,
+    template_id
+}) => {
     const response = await apiClient.post('/resume/generate', {
-        job_id, template_id,
+        job_id, template_id, name,
         data: {
             full_name,
             email,

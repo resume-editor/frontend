@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { generateResume } from '@/services/resumeService';
 import EditorSection from './EditorSection';
 import PersonalDetailsForm from './forms/PersonalDetailsForm';
@@ -10,11 +10,19 @@ import ProjectDetailsForm from './forms/ProjectDetailsForm';
 import AchievementsForm from './forms/AchievementForm';
 import DynamicFormList from './forms/DynamicFormList';
 import { cleanPayload } from '@/utils/utils';
+import '../../styles/editorSidebar.css'
 
 export default function EditorSidebar({ template, onPdfGenerated }) {
 
     // 🔑 job lifecycle
     const [jobId, setJobId] = useState(null);
+    const [name, setName] = useState('Unknown')
+
+    useEffect(() => {
+        if (template?.name) {
+            setName(template.name)
+        }
+    }, [template])
 
     // 🧠 Resume data
     const [personal, setPersonal] = useState({
@@ -42,11 +50,12 @@ export default function EditorSidebar({ template, onPdfGenerated }) {
                 education,
                 projects,
                 achievements,
+                name
             };
 
             const id = {
                 ...(jobId
-                    ? { job_id: jobId }             // update existing job
+                    ? { job_id: jobId, template_id: template.id }             // update existing job
                     : { template_id: template.id } // create new job
                 )
             }
@@ -72,7 +81,12 @@ export default function EditorSidebar({ template, onPdfGenerated }) {
 
     return (
         <div className="editor-sidebar">
-            <h3>Edit Resume</h3>
+            <input
+                className="template-name-input"
+                placeholder="Resume Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+            />
 
             {/* PERSONAL DETAILS */}
             <EditorSection title="Personal Details">

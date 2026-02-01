@@ -1,0 +1,25 @@
+.template-name-input {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    border: 1px solid #dcdfe3;
+    border-radius: 8px;
+    background-color: #ffffff;
+
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.template-name-input::placeholder {
+    color: #9aa0a6;
+    font-weight: 400;
+}
+
+.template-name-input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
