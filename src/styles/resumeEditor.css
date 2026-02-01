@@ -4,7 +4,6 @@
     overflow: hidden;
 }
 
-/* LEFT */
 .editor-column {
     width: 45%;
     min-width: 360px;
@@ -13,7 +12,6 @@
     padding: 16px;
 }
 
-/* RIGHT */
 .preview-column {
     flex: 1;
     overflow-y: auto;
@@ -33,8 +31,19 @@
     margin-top: 24px;
 }
 
+.editor-column,
+.preview-column,
+.editor-panel {
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE / Edge */
+}
 
-/* Mobile */
+.editor-column::-webkit-scrollbar,
+.preview-column::-webkit-scrollbar,
+.editor-panel::-webkit-scrollbar {
+    display: none;                /* Chrome / Safari */
+}
+
 @media (max-width: 900px) {
     .resume-editor-layout {
         flex-direction: column;
