@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import ResumeCard from '../../components/ResumeCard';
 import { fetchHomeData } from '../../services/homeService';
 import '../../styles/home.css';
+import Link from 'next/link';
 
 export default function HomePage() {
     const [templates, setTemplates] = useState([]);
@@ -51,6 +52,15 @@ export default function HomePage() {
 
     return (
         <main className="home-content">
+            {/* Settings Icon (Home only) */}
+            <Link href="/settings" className="settings-icon">
+                <img
+                    src="/public/settings.png"
+                    alt="Settings"
+                    className="settings-icon-img"
+                />
+            </Link>
+
             <h3 className="page-title">Resume Templates</h3>
 
             {/* Search bar */}

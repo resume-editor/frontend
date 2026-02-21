@@ -28,7 +28,20 @@ export const fetchHomeData = async (page = 1, size = 12, name = undefined) => {
 
 export const fetchSidebarData = async (page = 1, size = 10, name = undefined) => {
     let url = name ? `/resume?page=${page}&size=${size}&name=${name}` : `/resume?page=${page}&size=${size}`
-    console.log('URL : ', url)
     const response = await apiClient.get(url)
+    return response.data
+}
+
+export const updateUserTemplate = async (id, data) => {
+    const url = `/resume/${id}`
+    const response = await apiClient.put(url, data)
+    return response.data
+}
+
+export const deleteProject = async (data) => {
+    const url = `/resume/${id}`
+
+    const response = await apiClient.delete(url)
+
     return response.data
 }

@@ -45,6 +45,7 @@ export default function SignupPage() {
             loading={loading}
             onChange={handleChange}
             onSubmit={handleSubmit}
+            onSwitch={() => router.push('/login')}
         />
     );
 }
