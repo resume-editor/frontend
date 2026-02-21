@@ -48,6 +48,7 @@ export default function LoginPage() {
             loading={loading}
             onChange={handleChange}
             onSubmit={handleSubmit}
+            onSwitch={() => router.push('/signup')}
         />
     );
 }

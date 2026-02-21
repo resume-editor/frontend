@@ -1,10 +1,21 @@
+// components/AuthForm.js
 'use client';
-import '../styles/auth.css'
+import '../styles/auth.css';
 
-export default function AuthForm({ mode, form, error, loading, onChange, onSubmit }) {
+export default function AuthForm({
+    mode,
+    form,
+    error,
+    loading,
+    onChange,
+    onSubmit,
+    onSwitch,
+}) {
     return (
         <div className="auth-card">
-            <h4 className="auth-title">{mode === 'login' ? 'Login' : 'Create Account'}</h4>
+            <h4 className="auth-title">
+                {mode === 'login' ? 'Login' : 'Create Account'}
+            </h4>
 
             {mode === 'signup' && (
                 <input
@@ -44,7 +55,22 @@ export default function AuthForm({ mode, form, error, loading, onChange, onSubmi
             >
                 {loading ? 'Please wait…' : mode === 'login' ? 'Login' : 'Sign Up'}
             </button>
-        </div>
 
+            {/* SWITCH */}
+            <div className="auth-switch">
+                {mode === 'login' ? (
+                    <>
+                        Don’t have an account?{' '}
+                        <span onClick={onSwitch}>Sign up</span>
+                    </>
+                ) : (
+                    <>
+                        Already have an account?{' '}
+                        <span onClick={onSwitch}>Login</span>
+                    </>
+                )}
+            </div>
+
+        </div>
     );
 }

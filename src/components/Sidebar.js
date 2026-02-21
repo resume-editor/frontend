@@ -2,13 +2,20 @@
 
 import { useEffect, useRef, useState } from 'react';
 import '../styles/sidebar.css';
-import { fetchSidebarData } from '@/services/homeService';
+import { deleteProject, fetchSidebarData, updateUserTemplate } from '@/services/homeService';
 
 const PAGE_SIZE = 10;
 const DEBOUNCE_DELAY = 400;
 
 export default function Sidebar() {
   const [open, setOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [renameState, setRenameState] = useState({
+    id: null,
+    name: ''
+  });
+
+
 
   const [projects, setProjects] = useState([]);
   const [page, setPage] = useState(1);
@@ -73,6 +80,80 @@ export default function Sidebar() {
     }
   };
 
+  useEffect(() => {
+    const close = () => setActiveMenu(null);
+    window.addEventListener('click', close);
+    return () => window.removeEventListener('click', close);
+  }, []);
+
+  const handleRenameStart = (project) => {
+    setRenameState({
+      id: project.id,
+      name: project.name || ''
+    });
+    setActiveMenu(null);
+  };
+
+  const handleRenameChange = (e) => {
+    setRenameState(prev => ({
+      ...prev,
+      name: e.target.value
+    }));
+  };
+
+  const handleDeleteProject = async (project) => {
+    const { id } = project
+
+    if (!id) return
+
+    try {
+      await deleteProject({ id })
+
+      setProjects(prev => prev.filter(p => p.id !== id))
+    } catch (error) {
+      console.error('Error delelting project: ', error)
+    }
+  };
+
+
+  const handleRenameSubmit = async () => {
+    const { id, name } = renameState;
+
+    if (!id) return;
+
+    try {
+      await updateUserTemplate(id, { name })
+
+      setProjects(prev =>
+        prev.map(p =>
+          p.id === id
+            ? {
+              ...p,
+              name: name,
+            }
+            : p
+        )
+      );
+
+      setRenameState({ id: null, name: '' });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    if (!renameState.id) return;
+
+    const handleClickOutside = () => {
+      setRenameState({ id: null, name: '' });
+    };
+
+    window.addEventListener('click', handleClickOutside);
+    return () =>
+      window.removeEventListener('click', handleClickOutside);
+  }, [renameState.id]);
+
+
   return (
     <>
       {/* Hamburger */}
@@ -112,24 +193,98 @@ export default function Sidebar() {
           {error && <span className="error-text">{error}</span>}
 
           {projects.map((project) => (
-            <button
+            <div
               key={project.id}
               className="sidebar-item"
+              role="button"
+              tabIndex={0}
               onClick={() => {
+                if (renameState.id === project.id) return;
                 console.log('Clicked', project.id);
                 setOpen(false);
               }}
             >
-              <span className="sidebar-item-title">
-                {project.template?.name}
-              </span>
+              {/* LEFT: title + rename */}
+              <div className="sidebar-item-content">
+                {renameState.id === project.id ? (
+                  <div
+                    className="rename-wrapper"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <input
+                      className="rename-input"
+                      value={renameState.name}
+                      onChange={handleRenameChange}
+                      autoFocus
+                      maxLength={30}
+                      onKeyDown={(e) => {
+                        if (e.key === ' ') {
+                          e.stopPropagation();
+                        }
+                      }}
+                    />
 
-              <span className="sidebar-item-meta">
-                Last modified •{' '}
-                {new Date(project.updated_on).toLocaleString()}
-              </span>
-            </button>
+                    <button
+                      className="rename-save"
+                      onClick={handleRenameSubmit}
+                      aria-label="Save"
+                    >
+                      ✓
+                    </button>
+                  </div>
+                ) : (
+                  <span className="sidebar-item-title">
+                    {project?.name}
+                  </span>
+                )}
+
+
+                <span className="sidebar-item-meta">
+                  Last modified •{' '}
+                  {new Date(project.updated_on).toLocaleString()}
+                </span>
+              </div>
+
+              {/* RIGHT: 3-dot menu */}
+              <div className="sidebar-item-actions">
+                <button
+                  className="dots-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setActiveMenu(
+                      activeMenu === project.id ? null : project.id
+                    );
+                  }}
+                >
+                  ⋮
+                </button>
+
+                {activeMenu === project.id && (
+                  <div className="item-menu">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRenameStart(project);
+                      }}
+                    >
+                      Rename
+                    </button>
+
+                    <button
+                      className="danger"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteProject(project)
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
           ))}
+
 
           {loading && (
             <span className="sidebar-loading">Loading…</span>
@@ -140,9 +295,6 @@ export default function Sidebar() {
               No more projects
             </span>
           )}
-
-          {/* Static item */}
-          <button className="sidebar-item">Settings</button>
         </nav>
       </aside>
 

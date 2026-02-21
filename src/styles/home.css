@@ -31,3 +31,35 @@
   gap: 12px;
   margin-top: 24px;
 }
+
+.settings-icon {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 1100;
+}
+
+.settings-icon-img {
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.settings-icon-img:hover {
+  transform: rotate(20deg) scale(1.05);
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .settings-icon {
+    top: 12px;
+    right: 12px;
+  }
+
+  .settings-icon-img {
+    width: 24px;
+    height: 24px;
+  }
+}
